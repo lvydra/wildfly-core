@@ -349,8 +349,10 @@ final class OperationContextImpl extends AbstractOperationContext {
             for (Map.Entry<Step, Set<CapabilityId>> entry : missingForStep.entrySet()) {
                 Step step = entry.getKey();
                 ModelNode response = step.response;
+
                 StringBuilder unsupportedExpressionsMsg = new StringBuilder();
                 StringBuilder capabilityMissingMsg = new StringBuilder();
+
                 for (CapabilityId id : entry.getValue()) {
                     if (id.getName().matches(UNSUPORTED_EXPRESSION_PATERN)) {
                         unsupportedExpressionsMsg.append(System.lineSeparator()).append("\t\t").append(id.getName());
