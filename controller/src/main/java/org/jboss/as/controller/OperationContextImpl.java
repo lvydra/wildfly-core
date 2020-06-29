@@ -353,7 +353,7 @@ final class OperationContextImpl extends AbstractOperationContext {
                 StringBuilder capabilityMissingMsg = new StringBuilder();
                 for (CapabilityId id : entry.getValue()) {
                     if (id.getName().matches(UNSUPORTED_EXPRESSION_PATERN)) {
-                        unsupportedExpressionsMsg = unsupportedExpressionsMsg.append(System.lineSeparator()).append("\t\t").append(id.getName());
+                        unsupportedExpressionsMsg.append(System.lineSeparator()).append("\t\t").append(id.getName());
                     } else {
                         String formattedCapability = ignoreContext
                                 ? ControllerLogger.ROOT_LOGGER.formattedCapabilityName(id.getName())
