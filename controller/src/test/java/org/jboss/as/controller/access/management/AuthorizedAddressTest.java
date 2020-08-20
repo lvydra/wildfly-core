@@ -516,6 +516,21 @@ public class AuthorizedAddressTest {
         }
 
         @Override
+        public ModelNode getCurrentOperationName() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public ModelNode getCurrentOperationParameter(String name) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public ModelNode getCurrentOperationParameter(String name, boolean nullable) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
         public Environment getCallEnvironment() {
             throw new UnsupportedOperationException("Not supported yet.");
         }
