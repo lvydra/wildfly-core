@@ -23,11 +23,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <parent>
-          <groupId>org.wildfly.core</groupId>
-          <artifactId>wildfly-core-testsuite</artifactId>
-          <version>13.0.0.Beta5-SNAPSHOT</version>
-          <relativePath>../pom.xml</relativePath>
-     </parent>
+        <groupId>org.wildfly.core</groupId>
+        <artifactId>wildfly-core-testsuite</artifactId>
+        <version>13.0.1.Final-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
+    </parent>
 
     <artifactId>wildfly-core-testsuite-manualmode</artifactId>
 
@@ -126,6 +126,11 @@
         <dependency>
             <groupId>org.apache.sshd</groupId>
             <artifactId>sshd-core</artifactId>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.jcraft</groupId>
+            <artifactId>jsch</artifactId>
             <scope>test</scope>
         </dependency>
     </dependencies>
@@ -457,7 +462,7 @@
                 </plugins>
             </build>
         </profile>
-<!-- Test against bootable jar -->
+        <!-- Test against bootable jar -->
         <profile>
             <id>bootablejar.profile</id>
             <activation>
@@ -484,7 +489,6 @@
                     <plugin>
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-jar-maven-plugin</artifactId>
-                        <version>${version.org.wildfly.jar.plugin}</version>
                         <executions>
                             <!-- Provision a server with the core functionality we will provide in OpenShift images -->
                             <execution>
@@ -509,8 +513,6 @@
                                             <artifactId>wildfly-core-vault-test-galleon-pack</artifactId>
                                             <!--<artifactId>wildfly-core-galleon-pack</artifactId>-->
                                             <version>${project.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
                                             <!-- Specifically include patching -->
                                             <included-packages>
                                                 <name>org.jboss.as.patching.cli</name>

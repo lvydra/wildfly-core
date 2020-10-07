@@ -15,7 +15,7 @@
     <parent>
         <groupId>org.wildfly.core</groupId>
         <artifactId>wildfly-core-testsuite</artifactId>
-        <version>13.0.0.Beta5-SNAPSHOT</version>
+        <version>13.0.1.Final-SNAPSHOT</version>
         <relativePath>../pom.xml</relativePath>
     </parent>
 
@@ -479,7 +479,6 @@
                     <plugin>
                         <groupId>org.wildfly.plugins</groupId>
                         <artifactId>wildfly-jar-maven-plugin</artifactId>
-                        <version>${version.org.wildfly.jar.plugin}</version>
                         <executions>
                             <!-- Provision a server with the core functionality we will provide in OpenShift images -->
                             <execution>
@@ -514,8 +513,6 @@
                                             <artifactId>wildfly-core-vault-test-galleon-pack</artifactId>
                                             <!--<artifactId>wildfly-core-galleon-pack</artifactId>-->
                                             <version>${project.version}</version>
-                                            <inherit-configs>false</inherit-configs>
-                                            <inherit-packages>false</inherit-packages>
                                             <!-- Specifically include patching -->
                                             <included-packages>
                                                 <name>org.jboss.as.patching.cli</name>

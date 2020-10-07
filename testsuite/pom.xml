@@ -57,7 +57,7 @@
     <parent>
         <groupId>org.wildfly.core</groupId>
         <artifactId>wildfly-core-parent</artifactId>
-        <version>13.0.0.Beta5-SNAPSHOT</version>
+        <version>13.0.1.Final-SNAPSHOT</version>
     </parent>
 
     <artifactId>wildfly-core-testsuite</artifactId>
@@ -425,6 +425,17 @@
                     <name>ts.bootable</name>
                 </property>
             </activation>
+            <build>
+                <pluginManagement>
+                    <plugins>
+                        <plugin>
+                            <groupId>org.wildfly.plugins</groupId>
+                            <artifactId>wildfly-jar-maven-plugin</artifactId>
+                            <version>${version.org.wildfly.jar.plugin}</version>
+                        </plugin>
+                    </plugins>
+                </pluginManagement>
+            </build>
             <modules>
                 <module>rbac</module>
                 <module>manualmode</module>
