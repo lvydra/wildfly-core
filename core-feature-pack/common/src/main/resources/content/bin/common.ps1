@@ -297,7 +297,7 @@ Function Start-WildFly-Process {
 			pushd $JBOSS_HOME
 			& $JAVA $programArguments
 			if ($LastExitCode -eq 10){ # :shutdown(restart=true) was called
-			    Write-Host "Restarting application server..."
+			    Write-Host "Restarting..."
 				Start-WildFly-Process -programArguments $programArguments
 			}
 
@@ -306,6 +306,59 @@ Function Start-WildFly-Process {
 		}
 	}
 	Env-Clean-Up
+}
+
+# Returns java -version output for JDK defined by java opts
+Function Get-Java-Version ($javaOpts) {
+    if ($javaOpts -match '-d64') {
+        $opt_version = '-d64'
+    } elseif ($javaOpts -match '-d32') {
+        $opt_version = '-d32'
+    }
+
+    $result = & $JAVA $opt_version -version 2>&1
+    if ($LASTEXITCODE -eq 1) {
+        $result = & $JAVA -version 2>&1
+    }
+
+    return $result
+}
+
+# Check if can set option to use HotSpot VM
+Function Set-Java-Server-Option ($javaOpts) {
+    if ( -Not ($javaOpts -match '-server') ) {
+        # Check user requested JDK 'data model'
+        $version = Get-Java-Version ($javaOpts)
+
+        # Check if data model is supported by JDK
+        # Check for SUN(tm) JVM w/ HotSpot support
+        # Check for OpenJDK JVM w/server support
+        if ($LASTEXITCODE -eq 1) {
+            Write-Host $version
+        } elseif ($version -match 'HotSpot' -or $version -match 'OpenJDK' -or $version -match 'IBM J9') {
+            $javaOpts = "-server $javaOpts"
+        }
+    }
+
+    return $javaOpts
+}
+
+# For stanalone mode, check if client option could be set, if not try to set server option
+Function Set-Java-Client-Option ($javaOpts) {
+    if ( -Not($javaOpts -match '-server') -and -Not($javaOpts -match '-client') ) {
+        # Check user requested JDK 'data model'
+        $version = Get-Java-Version ($javaOpts)
+
+        if ($LASTEXITCODE -eq 1) {
+            Write-Host $version
+        } elseif ($version -match 'Client VM') {
+            $javaOpts = ,"-client" + $javaOpts
+        } elseif ($version -match 'hotspot' -or $version -match 'openJDK' -or $version -match 'IBM J9') {
+            $javaOpts = ,"-server" + $javaOpts
+        }
+    }
+
+    return $javaOpts
 }
 
 Function Set-Global-Variables {
