@@ -529,8 +529,14 @@ if /I "%~1"=="/name" (
     set SHORTNAME="%~2"
   )
 )
-%PRUNSRV% stop %SHORTNAME%
 echo Service %SHORTNAME% stopping...
+%PRUNSRV% stop %SHORTNAME% --StopTimeout=180
+if "%ERRORLEVEL%" == "0" (
+  echo Service %SHORTNAME% stoped
+) else (
+  echo Service %SHORTNAME% stopping forcefully...
+  taskkill /T /F /FI "SERVICES eq %SHORTNAME%"
+)
 goto cmdEnd
 
 :cmdRestart
